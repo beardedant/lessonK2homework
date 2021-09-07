@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_columnSpan="3"
         android:textSize="@dimen/header_text_size"
-        tools:text="Сен-Кристоф, Шаранта" />
+        android:text="Сен-Кристоф, Шаранта" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_time_old_temperature"
