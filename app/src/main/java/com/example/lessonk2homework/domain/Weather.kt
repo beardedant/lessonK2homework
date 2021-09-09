@@ -1,6 +1,5 @@
 package com.example.lessonk2homework.domain
 
-//TODO локальный дата класс с данными о погоде
 data class Weather(
     var temperature: String = "20",
     val latitude: String = "0",

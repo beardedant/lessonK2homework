@@ -10,8 +10,8 @@
         android:id="@+id/text_view_city"
         android:layout_height="wrap_content"
         android:layout_columnSpan="3"
-        android:textSize="@dimen/header_text_size"
-        android:text="Сен-Кристоф, Шаранта" />
+        android:text="Сен-Кристоф, Шаранта"
+        android:textSize="@dimen/header_text_size" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_time_old_temperature"
@@ -57,5 +57,20 @@
         android:id="@+id/text_view_pressure"
         android:layout_height="wrap_content"
         tools:text="Дав: 726" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/update_button"
+        android:layout_width="match_parent"
+        android:layout_columnSpan="3"
+        android:layout_marginTop="@dimen/bottom_padding_big"
+        android:text="@string/update_button_text" />
+
+    <ProgressBar
+        android:id="@+id/progressBarLayout"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="3"
+        android:layout_gravity="center" />
 
 </GridLayout>

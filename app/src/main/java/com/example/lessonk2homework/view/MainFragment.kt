@@ -14,7 +14,6 @@ import com.example.lessonk2homework.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
-    /* отображает модель */
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -40,21 +39,24 @@ class MainFragment : Fragment() {
             renderData(it)
         })
 
-//корявый метод обновления liveData
-        weatherViewModel.getDataFromRemoteStore()
-//---------------------------------
+        binding.updateButton.setOnClickListener {
+            weatherViewModel.getDataFromRemoteStore()
+        }
     }
 
-    private fun renderData(liveDataState: AppState) {
-        when (liveDataState) {
+    private fun renderData(downloadState: AppState) {
+        when (downloadState) {
             is AppState.Loading -> {
+                binding.progressBarLayout.visibility = View.VISIBLE
                 Snackbar.make(binding.root, "Loading", Snackbar.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
-                Snackbar.make(binding.root, "${liveDataState.error}", Snackbar.LENGTH_LONG).show()
+                binding.progressBarLayout.visibility = View.GONE
+                Snackbar.make(binding.root, "${downloadState.error}", Snackbar.LENGTH_LONG).show()
             }
             is AppState.Success -> {
-                updateViewFields(liveDataState.weather)
+                binding.progressBarLayout.visibility = View.GONE
+                updateViewFields(downloadState.weather)
             }
         }
     }
