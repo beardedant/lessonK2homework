@@ -8,10 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.lessonk2homework.databinding.FragmentMainBinding
+import com.example.lessonk2homework.domain.Weather
+import com.example.lessonk2homework.viewmodel.AppState
 import com.example.lessonk2homework.viewmodel.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
-    //TODO отображает модель
+    /* отображает модель */
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -24,7 +27,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,14 +37,35 @@ class MainFragment : Fragment() {
 
         val weatherViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         weatherViewModel.getWeatherLiveData().observe(viewLifecycleOwner, Observer {
-            //TODO вынести метод и получать все поля из объекта
-            binding.textViewTemperature.text =
-                weatherViewModel.getWeatherLiveData().value!!.temperature.toString()
+            renderData(it)
         })
 
-
+//корявый метод обновления liveData
         weatherViewModel.getDataFromRemoteStore()
+//---------------------------------
+    }
 
+    private fun renderData(liveDataState: AppState) {
+        when (liveDataState) {
+            is AppState.Loading -> {
+                Snackbar.make(binding.root, "Loading", Snackbar.LENGTH_SHORT).show()
+            }
+            is AppState.Error -> {
+                Snackbar.make(binding.root, "${liveDataState.error}", Snackbar.LENGTH_LONG).show()
+            }
+            is AppState.Success -> {
+                updateViewFields(liveDataState.weather)
+            }
+        }
+    }
+
+    private fun updateViewFields(weather: Weather) {
+        binding.textViewFeelsLike.text = weather.temperatureFeelsLike
+        binding.textViewTemperature.text = weather.temperature
+        binding.textViewHumidity.text = weather.humidity
+        binding.textViewPressure.text = weather.pressure
+        binding.textViewSky.text = weather.sky
+        binding.textViewWind.text = weather.windSpeed
     }
 
     override fun onDestroy() {

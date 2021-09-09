@@ -2,14 +2,14 @@ package com.example.lessonk2homework.domain
 
 //TODO локальный дата класс с данными о погоде
 data class Weather(
-    var temperature: Int = 0,
-    val latitude: Int = 0,
-    val longitude: Int = 0,
+    var temperature: String = "20",
+    val latitude: String = "0",
+    val longitude: String = "0",
 
-    val pressure: Int = 0,
-    val windSpeed: Int = 0,
-    val temperatureFeelsLike: Int = 0,
-    val sky: Int = 0,
-    val humidity: Int = 0,
+    val pressure: String = "758",
+    val windSpeed: String = "5",
+    val temperatureFeelsLike: String = "18",
+    val sky: String = "Облачно",
+    val humidity: String = "68"
 ) {
 }
