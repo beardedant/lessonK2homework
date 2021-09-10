@@ -20,7 +20,7 @@ class MainViewModel(
         Thread {
             getWeatherLiveData().postValue(AppState.Loading)
             sleep(1000)
-            if (Random.nextInt(10) > 5) {
+            if (Random.nextInt(10) > 2) {
                 sleep(1000)
                 liveDataState.postValue(AppState.Success(repository.getWeatherFromRemoteSource()))
             } else liveDataState.postValue(AppState.Error(IllegalStateException()))

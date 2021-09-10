@@ -52,7 +52,7 @@ class MainFragment : Fragment() {
             }
             is AppState.Error -> {
                 binding.progressBarLayout.visibility = View.GONE
-                Snackbar.make(binding.root, "${downloadState.error}", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, "${downloadState.error}", Snackbar.LENGTH_SHORT).show()
             }
             is AppState.Success -> {
                 binding.progressBarLayout.visibility = View.GONE
