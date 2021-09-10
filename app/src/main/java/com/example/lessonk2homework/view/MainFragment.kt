@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.lessonk2homework.R
 import com.example.lessonk2homework.databinding.FragmentMainBinding
-import com.example.lessonk2homework.domain.Weather
 import com.example.lessonk2homework.viewmodel.AppState
 import com.example.lessonk2homework.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -22,6 +22,9 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding
         get() = _binding!!
 
+    private val adapter = MainFragmentAdapter()
+    private var isRussian: Boolean = true
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,40 +37,46 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val weatherViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        weatherViewModel.getWeatherLiveData().observe(viewLifecycleOwner, Observer {
-            renderData(it)
-        })
+        binding.mainFragmentRecyclerView.adapter = adapter
 
-        binding.updateButton.setOnClickListener {
-            weatherViewModel.getDataFromRemoteStore()
+        val weatherViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        weatherViewModel.getWeatherLiveData()
+            .observe(viewLifecycleOwner, Observer {
+                renderData(it)
+            })
+
+        if (savedInstanceState == null)
+            weatherViewModel.getDataFromRemoteStore(true)
+
+        binding.mainFragmentFAB.setOnClickListener {
+            if (isRussian) {
+                weatherViewModel.getDataFromRemoteStore(isRussian)
+                isRussian = false
+                binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+            } else {
+                weatherViewModel.getDataFromRemoteStore(isRussian)
+                isRussian = true
+                binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
+            }
         }
     }
 
-    private fun renderData(downloadState: AppState) {
-        when (downloadState) {
+
+    private fun renderData(appState: AppState) {
+        when (appState) {
             is AppState.Loading -> {
-                binding.progressBarLayout.visibility = View.VISIBLE
+                binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
                 Snackbar.make(binding.root, "Loading", Snackbar.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
-                binding.progressBarLayout.visibility = View.GONE
-                Snackbar.make(binding.root, "${downloadState.error}", Snackbar.LENGTH_SHORT).show()
+                binding.mainFragmentLoadingLayout.visibility = View.GONE
+                Snackbar.make(binding.root, "${appState.error}", Snackbar.LENGTH_SHORT).show()
             }
             is AppState.Success -> {
-                binding.progressBarLayout.visibility = View.GONE
-                updateViewFields(downloadState.weather)
+                binding.mainFragmentLoadingLayout.visibility = View.GONE
+                adapter.setWeather(appState.weather)
             }
         }
-    }
-
-    private fun updateViewFields(weather: Weather) {
-        binding.textViewFeelsLike.text = weather.temperatureFeelsLike
-        binding.textViewTemperature.text = weather.temperature
-        binding.textViewHumidity.text = weather.humidity
-        binding.textViewPressure.text = weather.pressure
-        binding.textViewSky.text = weather.sky
-        binding.textViewWind.text = weather.windSpeed
     }
 
     override fun onDestroy() {

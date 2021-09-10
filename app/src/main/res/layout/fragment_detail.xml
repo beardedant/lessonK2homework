@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:columnCount="3">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_city"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="3"
+        tools:text="Сен-Кристоф, Шаранта"
+        android:textSize="@dimen/header_text_size" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_time_old_temperature"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="3"
+        android:paddingBottom="@dimen/bottom_padding_big"
+        tools:text="Сейчас 17:36. Вчера в это время +23" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_temperature"
+        android:layout_height="wrap_content"
+        android:layout_rowSpan="2"
+        android:layout_marginEnd="@dimen/end_margin"
+        android:paddingBottom="@dimen/bottom_padding_big"
+        android:textSize="@dimen/biggest_temperature_size"
+        tools:text="+23" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_sky"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        tools:text="Облачно с прояснениями" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_feels_like"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        tools:text="Ощущается как +24" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_wind"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/end_margin"
+        tools:text="В: 2,4 м/с, С" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_humidity"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/end_margin"
+        tools:text="Вл 66%" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_pressure"
+        android:layout_height="wrap_content"
+        tools:text="Дав: 726" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/update_button"
+        android:layout_width="match_parent"
+        android:layout_columnSpan="3"
+        android:layout_marginTop="@dimen/bottom_padding_big"
+        android:text="@string/update_button_text" />
+
+    <ProgressBar
+        android:id="@+id/progressBarLayout"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="3"
+        android:layout_gravity="center" />
+
+</GridLayout>
